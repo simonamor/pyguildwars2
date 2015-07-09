@@ -39,6 +39,6 @@ a list of dictionaries, each one declaring one slot within the bank.
     bank = gw2.api_call( 'v2/account/bank', **args )
     print( bank )
 
-    [{'count': 1, 'id':41291}, {'count':250, 'id':46735}]
+    [{'count':1, 'id':41291}, {'count':250, 'id':46735}]
 
 
