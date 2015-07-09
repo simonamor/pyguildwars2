@@ -2,8 +2,6 @@
 
 Python class for accessing the Guild Wars 2 API
 
-**Only compatible with Python 3 at present**
-
 To get an API key, visit https://account.guildwars2.com/account/api-keys
 and login with your Guild Wars 2 account. Once logged in, click the
 'New key' link and fill in the form with a user friendly name and check

@@ -1,6 +1,22 @@
 # Import urllib and JSON libraries
-import urllib.request
 
+# First we need urlopen and Request
+try:
+    # For Python 3.0 and later
+    from urllib.request import urlopen,Request
+except ImportError:
+    # Fall back to Python 2's urllib2
+    from urllib2 import urlopen,Request
+
+# And then urlencode
+try:
+    # For Python 3.0 and later
+    from urllib.parse import urlencode
+except ImportError:
+    # Fall back to Python 2
+    from urllib import urlencode
+
+# And finally, json
 try:
     import json
 except ImportError:
@@ -51,17 +67,23 @@ class pyguildwars2:
                 print(" Adding params:")
                 for p in params:
                     print('  ' + p + ': ' + params.get(p))
-            url_args = urllib.parse.urlencode(params)
+            url_args = urlencode(params)
             url = url + "?" + url_args
 
         if (self.debug):
             print("Fetching URL: " + url)
 
-        req = urllib.request.Request(url, None, headers)
-        with urllib.request.urlopen(req) as response:
-            json_data = response.read()
-            json_data = json_data.decode(response.headers.get_content_charset())
+        req = Request(url, None, headers)
+        response = urlopen(req)
+        json_data = response.read()
+        try:
+            # get_content_charset() is Python 3
+            encoding = response.headers.get_content_charset()
+        except AttributeError:
+            # Python 2 requires an alternative method
+            encoding = response.headers.getparam('charset')
 
+        json_data = json_data.decode(encoding)
         if (self.debug):
             print("Response: " + json_data)
 
